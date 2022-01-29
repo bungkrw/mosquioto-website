@@ -34,8 +34,6 @@ body {
     flex-direction: column;
     
     background: #e6fffa;
-    background: -webkit-linear-gradient(to right, #cbf8ef, #e6fffa);
-    background: linear-gradient(to right, #cbf8ef, #e6fffa);
   }
 
 .container {
