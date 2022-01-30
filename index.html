@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--CSS-->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        nav {
+            background: #009578;
+            height: 80px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+
+        lable.logo {
+            color: white;
+            font-size: 35px;
+            line-height: 80px;
+            padding: 0 100px;
+            font-weight: bold;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column;
+
+            background: #e6fffa;
+            background: -webkit-linear-gradient(to right, #cbf8ef, #e6fffa);
+            background: linear-gradient(to right, #cbf8ef, #e6fffa);
+        }
+
+        label {
+            color: #013b30;
+            font-size: 50px;
+            line-height: 80px;
+            padding: 0 100px;
+            font-weight: bold;
+            margin-top: 100px;
+        }
+        label.count {
+            color: #013b30;
+            font-size: 20px;
+            line-height: 35px;
+            padding: 0 100px;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-radius: 5px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+            font-family: "Quicksand", sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            width: auto;
+            margin-top: 20px;
+            margin-bottom: auto;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: -moz-fit-content;
+            max-width: fit-content;
+            white-space: nowrap;
+        }
+
+        th {
+            background: #009578;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 10px 20px;
+        }
+
+
+        tr:nth-child(even) {
+            background: #eeeeee;
+        }
+
+        tr:nth-child(odd) {
+            background: #ffffff;
+        }
+    </style>
+
+    <title>MosquIoTo Website</title>
+</head>
+<nav>
+    <lable class="logo">MosquIoTo</lable>
+</nav>
+
+<body>
+    <label>Classification Results</label>
+    <label class="count">Number of Detected Segment(s): 12</label>
+    <label class="count">Number of Classified Segment(s): 10</label>
+    <!-- JS -->
+    <script src="./lib/papaparse.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script>
+    <script>
+        function arrayToTable(tableData) {
+            var table = $('<table></table>');
+            $(tableData).each(function (i, rowData) {
+                if (i != tableData.length - 1) {
+                    var row = $('<tr></tr>');
+                    if (i == 0) {
+                        $(rowData).each(function (j, cellData) {
+                            row.append($('<th>' + cellData + '</th>'));
+                        });
+                    }
+                    else {
+                        $(rowData).each(function (j, cellData) {
+                            row.append($('<td>' + cellData + '</td>'));
+                        });
+                    }
+                }
+
+                table.append(row);
+            });
+            return table;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "./Results.csv",
+            success: function (data) {
+                $('body').append(arrayToTable(Papa.parse(data).data));
+            }
+        });
+    </script>
+    <header></header>
+
+</body>
+
+</html>
